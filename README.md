@@ -10,29 +10,6 @@ A robust, enterprise-grade End-to-End (E2E) test automation framework designed f
 
 ---
 
-## 📑 Table of Contents
-
-- [Overview & Highlights](#-overview--highlights)
-- [Project Architecture](#-project-architecture)
-- [Test Specification & Traceability Matrix](#-test-specification--traceability-matrix)
-  - [1. Authentication Suite (`test_auth.py`)](#1-authentication-suite-test_authpy)
-  - [2. Inventory & Product Browsing (`test_inventory.py`)](#2-inventory--product-browsing-test_inventorypy)
-  - [3. Shopping Cart Suite (`test_cart.py`)](#3-shopping-cart-suite-test_cartpy)
-  - [4. Checkout Flow Suite (`test_checkout.py`)](#4-checkout-flow-suite-test_checkoutpy)
-  - [5. Navigation & Session Controls (`test_navigation.py`)](#5-navigation--session-controls-test_navigationpy)
-- [Prerequisites & Installation](#-prerequisites--installation)
-- [Running Tests](#-running-tests)
-  - [Basic Execution](#basic-execution)
-  - [Headed vs Headless Mode](#headed-vs-headless-mode)
-  - [Execution by Marker](#execution-by-marker)
-  - [Targeted Test Execution](#targeted-test-execution)
-- [Test Reporting & Artifacts](#-test-reporting--artifacts)
-- [Configuration Reference (`pytest.ini`)](#-configuration-reference-pytestini)
-- [Design Principles & Engineering Standards](#-design-principles--engineering-standards)
-- [Continuous Integration (CI/CD)](#-continuous-integration-cicd)
-
----
-
 ## 🚀 Overview & Highlights
 
 - **Playwright Sync API**: Utilizes Playwright's blazing-fast browser automation engine with native auto-waiting and resilient locator strategies.
@@ -75,55 +52,6 @@ SauceDemo_system-playwright-python/
 ├── requirements.txt             # Production and test dependencies
 └── README.md                    # Project documentation
 ```
-
----
-
-## 🧪 Test Specification & Traceability Matrix
-
-The framework covers **17 comprehensive end-to-end test scenarios**:
-
-### 1. Authentication Suite (`test_auth.py`)
-
-| Test ID | Name / Description | Type | Markers | Expected Outcome |
-| :--- | :--- | :--- | :--- | :--- |
-| **TC-AUTH-001** | Successful Login with Standard User | Smoke / Functional | `@pytest.mark.auth`<br>`@pytest.mark.smoke` | Navigates to `/inventory.html`, header logo displays "Swag Labs", products visible. |
-| **TC-AUTH-002** | Login Attempt with Locked-Out User | Negative / Error | `@pytest.mark.auth`<br>`@pytest.mark.negative` | Displays error: `Epic sadface: Sorry, this user has been locked out.` |
-| **TC-AUTH-003** | Login Attempt with Empty Username | Negative / Validation | `@pytest.mark.auth`<br>`@pytest.mark.negative` | Displays error: `Epic sadface: Username is required` |
-| **TC-AUTH-004** | Login Attempt with Empty Password | Negative / Validation | `@pytest.mark.auth`<br>`@pytest.mark.negative` | Displays error: `Epic sadface: Password is required` |
-| **TC-AUTH-005** | Login Attempt with Invalid Credentials | Negative / Error | `@pytest.mark.auth`<br>`@pytest.mark.negative` | Displays error: `Epic sadface: Username and password do not match any user in this service` |
-
-### 2. Inventory & Product Browsing (`test_inventory.py`)
-
-| Test ID | Name / Description | Type | Markers | Expected Outcome |
-| :--- | :--- | :--- | :--- | :--- |
-| **TC-INV-001** | Verify Inventory Items Display | Smoke / Functional | `@pytest.mark.inventory`<br>`@pytest.mark.smoke` | Exactly 6 products displayed; each contains non-empty title, description, price, and image. |
-| **TC-INV-002** | Product Sorting by Name (A-Z & Z-A) | Functional | `@pytest.mark.inventory` | Correct alphabetical sort order verified for both ascending (`az`) and descending (`za`). |
-| **TC-INV-003** | Product Sorting by Price (Low-High & High-Low) | Functional | `@pytest.mark.inventory` | Correct numeric price sorting verified for ascending (`lohi`) and descending (`hilo`). |
-| **TC-INV-004** | View Product Details Page | Functional | `@pytest.mark.inventory` | Navigates to product detail page (`inventory-item.html?id=...`), validates details and "Back to products". |
-
-### 3. Shopping Cart Suite (`test_cart.py`)
-
-| Test ID | Name / Description | Type | Markers | Expected Outcome |
-| :--- | :--- | :--- | :--- | :--- |
-| **TC-CART-001** | Add Item to Cart from Inventory | Smoke / Functional | `@pytest.mark.cart`<br>`@pytest.mark.smoke` | Button label toggles to "Remove"; shopping cart badge updates to `1`. |
-| **TC-CART-002** | Remove Item from Cart on Inventory Page | Functional | `@pytest.mark.cart` | Button toggles back to "Add to cart"; shopping cart badge is removed. |
-| **TC-CART-003** | Cart Items Persistence Across Pages | Functional | `@pytest.mark.cart` | Added items persist accurately when navigating from inventory to cart view (`cart.html`). |
-| **TC-CART-004** | Remove Item Directly from Cart Page | Functional | `@pytest.mark.cart` | Item removed from cart list; badge updates count dynamically. |
-
-### 4. Checkout Flow Suite (`test_checkout.py`)
-
-| Test ID | Name / Description | Type | Markers | Expected Outcome |
-| :--- | :--- | :--- | :--- | :--- |
-| **TC-CHK-001** | End-to-End Successful Checkout | Smoke / E2E | `@pytest.mark.checkout`<br>`@pytest.mark.smoke` | Completes step-one (shipping info), step-two (tax + subtotal validation), and finish page (`THANK YOU FOR YOUR ORDER`). |
-| **TC-CHK-002** | Checkout Validation (Missing Fields) | Negative / Validation | `@pytest.mark.checkout`<br>`@pytest.mark.negative` | Verifies inline error triggers for First Name, Last Name, and Postal Code. |
-| **TC-CHK-003** | Cancel Checkout Flow | Functional | `@pytest.mark.checkout` | Clicking "Cancel" on Step One returns user safely to `cart.html` with cart items preserved. |
-
-### 5. Navigation & Session Controls (`test_navigation.py`)
-
-| Test ID | Name / Description | Type | Markers | Expected Outcome |
-| :--- | :--- | :--- | :--- | :--- |
-| **TC-NAV-001** | Sidebar Logout Functionality | Smoke / Functional | `@pytest.mark.navigation`<br>`@pytest.mark.smoke` | Opens burger menu, clicks "Logout", redirects to login page with session invalidated. |
-| **TC-NAV-002** | Reset Application State via Sidebar | Functional | `@pytest.mark.navigation` | Clicks "Reset App State", clears cart badge, and empties shopping cart. |
 
 ---
 
@@ -178,7 +106,7 @@ All execution defaults (HTML reporting, videos, screenshots, slow-motion) are pr
 
 ### Basic Execution
 
-Run all 17 tests in headless mode:
+Run all tests in headless mode:
 ```bash
 pytest
 ```
