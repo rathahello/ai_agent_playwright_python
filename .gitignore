@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest / Test Reports & Artifacts
+.pytest_cache/
+reports/
+test-results/
+
+# Playwright
+.playwright/

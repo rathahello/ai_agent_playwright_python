@@ -1,0 +1,8 @@
+# Pyrefly configuration file
+python-interpreter-path = "C:/Users/sereyratha.chann/AppData/Local/Programs/Python/Python314/python.exe"
+search-path = [".", "pages", "tests"]
+site-package-path = ["C:/Users/sereyratha.chann/AppData/Local/Programs/Python/Python314/Lib/site-packages"]
+enable-fallback-search-path = true
+
+[errors]
+missing-import = "ignore"

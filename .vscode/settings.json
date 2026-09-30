@@ -1,0 +1,14 @@
+{
+  "python.defaultInterpreterPath": "C:\\Users\\sereyratha.chann\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}"
+  ],
+  "python.autoComplete.extraPaths": [
+    "${workspaceFolder}"
+  ],
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": [
+    "tests"
+  ]
+}
