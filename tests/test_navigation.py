@@ -81,6 +81,8 @@ def test_tc_nav_002_reset_app_state(
     inventory_page.add_to_cart(BIKE_LIGHT)
     expect(cart_page.cart_badge).to_have_text("2")
 
+
+
     # Action: Reset App State via NavigationPage
     navigation_page.reset_app_state()
 

@@ -45,3 +45,5 @@ class NavigationPage(BasePage):
         self.open_menu()
         self.reset_link.click()
         self.close_menu()
+
+
