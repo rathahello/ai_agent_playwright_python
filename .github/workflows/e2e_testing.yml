@@ -38,3 +38,33 @@ jobs:
           name: playwright-test-reports
           path: reports/
           retention-days: 14
+
+      - name: Send Telegram Notification
+        if: always()
+        env:
+          TG_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TG_BOT_TOKEN" ] || [ -z "$TG_CHAT_ID" ]; then
+            echo "Telegram credentials not configured. Skipping notification."
+            exit 0
+          fi
+
+          if [ "${{ job.status }}" = "success" ]; then
+            STATUS="✅ PASSED"
+          else
+            STATUS="❌ FAILED"
+          fi
+
+          MESSAGE="<b>Playwright E2E Tests: ${STATUS}</b>%0A%0A"
+          MESSAGE+="• <b>Repository:</b> ${{ github.repository }}%0A"
+          MESSAGE+="• <b>Branch:</b> ${{ github.ref_name }}%0A"
+          MESSAGE+="• <b>Triggered by:</b> ${{ github.actor }}%0A"
+          MESSAGE+="• <b>Commit:</b> <code>${{ github.sha }}</code>%0A"
+          MESSAGE+="• <b>Run Details:</b> <a href=\"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\">View Actions Log</a>"
+
+          curl -s -X POST "https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TG_CHAT_ID}" \
+            -d "parse_mode=HTML" \
+            -d "disable_web_page_preview=true" \
+            -d "text=${MESSAGE}"
